@@ -151,6 +151,14 @@ test("a TTS run that exits 0 but writes no WAV fails, and keeps no old audio as 
   assert.equal(run(env).calls.length, 3 + 2 + 3, "the old WAV must not count as Ryan's audio after a failed run");
 });
 
+test("an ASR run that exits 0 but writes no transcript fails, and keeps no old transcript", () => {
+  const env = setup();
+  run(env);
+  const result = run(env, defaultArgs, { FAKE_ASR_EXIT: "0" });
+  assert.equal(result.status, 1, result.stdout);
+  assert.match(result.stderr, /made no transcript for line-01/);
+});
+
 test("after a voice change fails part way, the old voice makes new audio for every line", () => {
   const env = setup();
   run(env);

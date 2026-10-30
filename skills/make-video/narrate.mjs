@@ -135,6 +135,7 @@ try {
       "--model", values["asr-model"], "--audio", join(out, wav),
       "--output-path", join(asrDir, name), "--format", "json",
     ]);
+    if (!existsSync(asrFile)) throw new Error(`mlx_audio.stt.generate made no transcript for ${name}`);
     const transcript = JSON.parse(readFileSync(asrFile, "utf8")).text.trim();
     const seconds = Math.round(wavSeconds(join(out, wav)) * 1000) / 1000;
     const match = words(transcript).join(" ") === words(text).join(" ");
