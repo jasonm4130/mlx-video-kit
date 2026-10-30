@@ -4,12 +4,12 @@ mlx-video-kit is a plugin for Claude Code and Codex. It helps an agent make narr
 
 The plugin picks the models from the Mac's total memory, so a 16 GB Mac and a 128 GB Mac each get models that fit.
 
-This repository is in early work. The `make-video` skill is a placeholder until a later change fills it in.
+This repository is in early work. The `make-video` skill makes the narration and renders scenes of text. A later change adds the images.
 
 ## Skills
 
 - `video-setup` checks the tools, installs the MLX tools and downloads the models for this Mac. Run it once per Mac.
-- `make-video` writes a storyboard, makes the narration and the images, and renders the video with HyperFrames.
+- `make-video` writes a storyboard, makes the narration, checks each line with a local speech-to-text model, and renders the video with HyperFrames. Its script `narrate.mjs` makes one WAV per narration line and names each line whose transcript differs from its text.
 
 ## Install
 
@@ -54,7 +54,7 @@ Run the checks with:
 bash scripts/check
 ```
 
-The script needs Node.js 22 or later and the `claude` CLI. It runs the tests in `tests/` and then `claude plugin validate --strict .`. The tests fail when the version fields in the four manifests differ, or when a `SKILL.md` has no description. When you change the version, change it in all four files.
+The script needs Node.js 22 or later and the `claude` CLI. It runs the tests in `tests/` and then `claude plugin validate --strict .`. The tests fail when the version fields in the four manifests differ, or when a `SKILL.md` has no description. The `narrate.mjs` tests run the script with stand-in mlx-audio commands, so they need no MLX models. When you change the version, change it in all four files.
 
 ## Licence
 
