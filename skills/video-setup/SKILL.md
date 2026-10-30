@@ -56,6 +56,8 @@ Pick the one row of the table below whose "Total memory" holds that number. If t
 
 Every model in the table is Apache-2.0. The Iris image command also downloads its text encoder, `Qwen/Qwen3-VL-4B-Instruct`, which is Apache-2.0 too.
 
+The 128 GB row keeps Qwen3-TTS for narration after a comparison with `mlx-community/VoxCPM2-bf16` on 9 lines. Both models had no clipping, peaked at -4.6 to -4.7 dBFS and matched 9 of 9 lines on an ASR check. Qwen3-TTS spoke at 1.8 to 2.6 words per second, had a loudness spread of 5.8 dB and paused at most 0.42 s inside a line. VoxCPM2 spoke at 2.4 to 3.3 words per second, had a spread of 4.8 dB, paused at most 0.54 s and added 0.3 to 0.6 s of silence at the end. Qwen3-TTS was faster and used less memory, and it has the named voices that the `make-video` skill passes. These numbers do not measure how natural the voice sounds.
+
 "measured" means that someone has recorded the peak memory of that row's image model. "unmeasured" means that nobody has, so the row can need more memory than the Mac has. When you pick an unmeasured row, tell the user this.
 
 Tell the user the tier you picked, the memory you read, and the two models.
