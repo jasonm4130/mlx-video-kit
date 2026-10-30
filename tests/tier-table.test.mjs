@@ -70,7 +70,7 @@ for (const [memsize, tier, narration, image] of [
   [24 * GIB, "16 GB", "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit", "mflux-generate-iris --model iris-3b -q 8"],
   [36 * GIB, "32-36 GB", "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit", "mflux-generate-flux2 --model flux2-klein-4b"],
   [64 * GIB, "64 GB", "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-bf16", "mflux-generate-qwen --model qwen-image-2512 -q 8"],
-  [128 * GIB, "128 GB", "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-bf16", "mflux-generate-qwen --model qwen-image-2512"],
+  [128 * GIB, "128 GB", "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-bf16", "mflux-generate-ernie-image-turbo --model ernie-image-turbo"],
 ]) {
   test(`a Mac with hw.memsize ${memsize} gets the ${tier} row`, () => {
     const row = pickRow(rows, memsize);
@@ -80,6 +80,10 @@ for (const [memsize, tier, narration, image] of [
     assert.equal(row["Image command"], image);
   });
 }
+
+test("the 128 GB row names ERNIE-Image-Turbo as its image model", () => {
+  assert.equal(pickRow(rows, 128 * GIB)["Image model"], "baidu/ERNIE-Image-Turbo");
+});
 
 test("a Mac with less than 16 GiB gets no row", () => {
   assert.equal(pickRow(rows, 8 * GIB), undefined);
