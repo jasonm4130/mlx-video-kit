@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -128,6 +128,21 @@ test("a rerun makes a new image only for a changed prompt", () => {
   );
   assert.equal(pngText(env, "scene-02.png"), "2:A grey lake.");
   assert.equal(readImages(env).images[1].prompt, "A grey lake.");
+});
+
+test("a rerun makes a new image for a scene whose PNG is missing or is not a PNG", () => {
+  const env = setup("A red fox.\nA blue lake.\nA green hill.\n");
+  run(env);
+  rmSync(join(env.out, "scene-02.png"));
+  writeFileSync(join(env.out, "scene-03.png"), "not a png");
+  const result = run(env);
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(
+    result.calls.slice(3).map((call) => flag(call, "--seed")),
+    ["2", "3"],
+  );
+  assert.equal(pngText(env, "scene-02.png"), "2:A blue lake.");
+  assert.equal(pngText(env, "scene-03.png"), "3:A green hill.");
 });
 
 test("a rerun with another command or size makes every image again", () => {
