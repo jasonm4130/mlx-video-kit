@@ -1,0 +1,3 @@
+Every voice in this video comes from a model on this Mac.
+A second local model checks each line by ear.
+Nothing in this video goes to a hosted service.
