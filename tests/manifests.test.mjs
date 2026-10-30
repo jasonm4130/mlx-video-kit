@@ -32,8 +32,10 @@ test("every version field in the four manifests is the same", () => {
 // A one-line YAML value without its quotes or trailing comment. A YAML null
 // reads as "", because the YAML parser gives no description for it.
 function scalarValue(raw) {
-  const quoted = /^(["'])(.*?)\1/.exec(raw);
-  if (quoted) return quoted[2].trim();
+  const singleQuoted = /^'((?:[^']|'')*)'/.exec(raw);
+  if (singleQuoted) return singleQuoted[1].replaceAll("''", "'").trim();
+  const doubleQuoted = /^"((?:[^"\\]|\\.)*)"/.exec(raw);
+  if (doubleQuoted) return doubleQuoted[1].trim();
   const plain = raw.replace(/(^|\s)#.*$/, "").trim();
   return /^(null|Null|NULL|~)?$/.test(plain) ? "" : plain;
 }
@@ -65,6 +67,9 @@ test("skillDescription reads each frontmatter form", () => {
   assert.equal(skillDescription('---\ndescription: ""\n---\n'), "");
   assert.equal(skillDescription("---\ndescription: Make a video. # draft\n---\n"), "Make a video.");
   assert.equal(skillDescription("---\ndescription: > # folded\n  Make a video.\n---\n"), "Make a video.");
+  assert.equal(skillDescription("---\ndescription: '''Make a video.'''\n---\n"), "'Make a video.'");
+  assert.equal(skillDescription('---\ndescription: "\\"Make\\" a video."\n---\n'), '\\"Make\\" a video.');
+  assert.equal(skillDescription("---\ndescription: '' # removed\n---\n"), "");
   assert.equal(skillDescription('---\ndescription: "" # removed\n---\n'), "");
   assert.equal(skillDescription("---\ndescription: # removed\n---\n"), "");
   assert.equal(skillDescription("---\ndescription: null\n---\n"), "");
