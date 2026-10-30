@@ -1,0 +1,21 @@
+{
+  "name": "mlx-video-kit",
+  "interface": {
+    "displayName": "mlx-video-kit"
+  },
+  "plugins": [
+    {
+      "name": "mlx-video-kit",
+      "version": "0.1.0",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Creativity"
+    }
+  ]
+}

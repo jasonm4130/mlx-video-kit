@@ -1,0 +1,13 @@
+{
+  "name": "mlx-video-kit",
+  "description": "Make narrated videos on a Mac with local MLX models: MLX narration and MLX images, chosen by the Mac's memory, placed in HyperFrames videos.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jason Matthew",
+    "url": "https://github.com/jasonm4130"
+  },
+  "homepage": "https://github.com/jasonm4130/mlx-video-kit",
+  "repository": "https://github.com/jasonm4130/mlx-video-kit",
+  "license": "MIT",
+  "keywords": ["video", "mlx", "apple-silicon", "tts", "image-generation", "hyperframes"]
+}

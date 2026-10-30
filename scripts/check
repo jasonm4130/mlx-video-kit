@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Runs the repository tests, then the Claude Code plugin validator.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+node --test tests/*.test.mjs
+claude plugin validate --strict .

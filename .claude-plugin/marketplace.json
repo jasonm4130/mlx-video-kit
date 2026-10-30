@@ -1,0 +1,22 @@
+{
+  "name": "mlx-video-kit",
+  "owner": {
+    "name": "Jason Matthew",
+    "url": "https://github.com/jasonm4130"
+  },
+  "description": "The mlx-video-kit plugin: local MLX narration and images for HyperFrames videos.",
+  "plugins": [
+    {
+      "name": "mlx-video-kit",
+      "source": "./",
+      "description": "Make narrated videos on a Mac with local MLX models: MLX narration and MLX images, chosen by the Mac's memory, placed in HyperFrames videos.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Jason Matthew"
+      },
+      "homepage": "https://github.com/jasonm4130/mlx-video-kit",
+      "license": "MIT",
+      "category": "creativity"
+    }
+  ]
+}
