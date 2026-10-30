@@ -3,31 +3,12 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { markdownTable } from "./markdown-table.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const skill = readFileSync(join(root, "skills/video-setup/SKILL.md"), "utf8");
 
 const GIB = 1024 ** 3;
-
-// The rows of the markdown table whose header starts with "| Tier |",
-// each as an object keyed by the header cells.
-function tierTable(markdown) {
-  const lines = markdown.split(/\r?\n/);
-  const start = lines.findIndex((line) => line.startsWith("| Tier |"));
-  assert.notEqual(start, -1, "video-setup SKILL.md has no tier table");
-  const cells = (line) =>
-    line
-      .slice(1, -1)
-      .split("|")
-      .map((cell) => cell.trim().replaceAll("`", ""));
-  const header = cells(lines[start]);
-  const rows = [];
-  for (const line of lines.slice(start + 2)) {
-    if (!line.startsWith("|")) break;
-    rows.push(Object.fromEntries(cells(line).map((cell, i) => [header[i], cell])));
-  }
-  return rows;
-}
 
 // Reads "16-31" or "128 or more" as { min, max } in GiB.
 function memoryRange(text) {
@@ -47,7 +28,7 @@ function pickRow(rows, memsize) {
   });
 }
 
-const rows = tierTable(skill);
+const rows = markdownTable(skill, "Tier");
 
 test("the tier table has the four tiers in order", () => {
   assert.deepEqual(

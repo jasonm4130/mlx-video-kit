@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --ground: #0b0b0d;
+        --ink: #f5f1e8;
+        --accent: #f2b45a;
+        --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--ground);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        font-family: var(--font-display);
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .scene-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .scene::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.35) 32%, rgba(0, 0, 0, 0) 55%);
+      }
+      .scene h1 {
+        position: absolute;
+        z-index: 1;
+        left: 120px;
+        right: 120px;
+        bottom: 110px;
+        color: var(--ink);
+        font-size: 84px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+      }
+      .scene h1::before {
+        content: "";
+        display: block;
+        width: 96px;
+        height: 8px;
+        margin-bottom: 28px;
+        background: var(--accent);
+      }
+      #scene-1 h1 {
+        font-size: 104px;
+      }
+      #scene-7 h1 {
+        font-size: 72px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="33.84" data-width="1920" data-height="1080">
+      <section id="scene-1" class="clip scene" data-start="0" data-duration="3.36" data-track-index="0">
+        <img class="scene-image" src="assets/images/scene-01.png" alt="" />
+        <h1>mlx-video-kit</h1>
+      </section>
+      <section id="scene-2" class="clip scene" data-start="3.36" data-duration="6.72" data-track-index="0">
+        <img class="scene-image" src="assets/images/scene-02.png" alt="" />
+        <h1>A plugin for Claude Code and Codex</h1>
+      </section>
+      <section id="scene-3" class="clip scene" data-start="10.08" data-duration="4.64" data-track-index="0">
+        <img class="scene-image" src="assets/images/scene-03.png" alt="" />
+        <h1>Local voices. Local pictures.</h1>
+      </section>
+      <section id="scene-4" class="clip scene" data-start="14.72" data-duration="6" data-track-index="0">
+        <img class="scene-image" src="assets/images/scene-04.png" alt="" />
+        <h1>16 GB to 128 GB</h1>
+      </section>
+      <section id="scene-5" class="clip scene" data-start="20.72" data-duration="6.4" data-track-index="0">
+        <img class="scene-image" src="assets/images/scene-05.png" alt="" />
+        <h1>Every line checked by ear</h1>
+      </section>
+      <section id="scene-6" class="clip scene" data-start="27.12" data-duration="2.96" data-track-index="0">
+        <img class="scene-image" src="assets/images/scene-06.png" alt="" />
+        <h1>HyperFrames renders the video</h1>
+      </section>
+      <section id="scene-7" class="clip scene" data-start="30.08" data-duration="3.76" data-track-index="0">
+        <img class="scene-image" src="assets/images/scene-07.png" alt="" />
+        <h1>github.com/jasonm4130/mlx-video-kit</h1>
+      </section>
+      <audio id="narration-1" src="assets/narration/line-01.wav" data-start="0" data-duration="3.36" data-track-index="1"></audio>
+      <audio id="narration-2" src="assets/narration/line-02.wav" data-start="3.36" data-duration="6.72" data-track-index="1"></audio>
+      <audio id="narration-3" src="assets/narration/line-03.wav" data-start="10.08" data-duration="4.64" data-track-index="1"></audio>
+      <audio id="narration-4" src="assets/narration/line-04.wav" data-start="14.72" data-duration="6" data-track-index="1"></audio>
+      <audio id="narration-5" src="assets/narration/line-05.wav" data-start="20.72" data-duration="6.4" data-track-index="1"></audio>
+      <audio id="narration-6" src="assets/narration/line-06.wav" data-start="27.12" data-duration="2.96" data-track-index="1"></audio>
+      <audio id="narration-7" src="assets/narration/line-07.wav" data-start="30.08" data-duration="3.76" data-track-index="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      // Each scene: a slow push in on the image, and the text rises in after a short beat.
+      document.querySelectorAll(".scene").forEach((scene) => {
+        const start = Number(scene.dataset.start);
+        const duration = Number(scene.dataset.duration);
+        tl.fromTo(scene.querySelector(".scene-image"), { scale: 1.0 }, { scale: 1.08, duration, ease: "none" }, start);
+        tl.fromTo(
+          scene.querySelector("h1"),
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+          start + 0.15,
+        );
+      });
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

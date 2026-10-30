@@ -1,0 +1,7 @@
+This is MLX video kit.
+It is a plugin for Claude Code and Codex that makes narrated videos on a Mac.
+Every voice and every picture in this reel comes from a model on this machine.
+First, a setup skill checks how much memory the Mac has, and picks models that fit.
+A second model listens to each line, and flags any word the voice gets wrong.
+Then Hyper Frames turns the storyboard into a video.
+Nothing in this reel went to a hosted service. Make your own.
