@@ -1,0 +1,70 @@
+{
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-bf16",
+  "voice": "Ryan",
+  "totalSeconds": 33.84,
+  "lines": [
+    {
+      "n": 1,
+      "text": "This is MLX video kit.",
+      "wav": "line-01.wav",
+      "start": 0,
+      "seconds": 3.36,
+      "transcript": "This is MLX Video Kit.",
+      "match": true
+    },
+    {
+      "n": 2,
+      "text": "It is a plugin for Claude Code and Codex that makes narrated videos on a Mac.",
+      "wav": "line-02.wav",
+      "start": 3.36,
+      "seconds": 6.72,
+      "transcript": "It is a plugin for Claude Code and Codex that makes narrated videos on a Mac.",
+      "match": true
+    },
+    {
+      "n": 3,
+      "text": "Every voice and every picture in this reel comes from a model on this machine.",
+      "wav": "line-03.wav",
+      "start": 10.08,
+      "seconds": 4.64,
+      "transcript": "Every voice and every picture in this reel comes from a model on this machine.",
+      "match": true
+    },
+    {
+      "n": 4,
+      "text": "First, a setup skill checks how much memory the Mac has, and picks models that fit.",
+      "wav": "line-04.wav",
+      "start": 14.72,
+      "seconds": 6,
+      "transcript": "First, a setup skill checks how much memory the Mac has and picks models that fit.",
+      "match": true
+    },
+    {
+      "n": 5,
+      "text": "A second model listens to each line, and flags any word the voice gets wrong.",
+      "wav": "line-05.wav",
+      "start": 20.72,
+      "seconds": 6.4,
+      "transcript": "A second model listens to each line and flags any word the voice gets wrong.",
+      "match": true
+    },
+    {
+      "n": 6,
+      "text": "Then Hyper Frames turns the storyboard into a video.",
+      "wav": "line-06.wav",
+      "start": 27.12,
+      "seconds": 2.96,
+      "transcript": "Then Hyper Frames turns the storyboard into a video.",
+      "match": true
+    },
+    {
+      "n": 7,
+      "text": "Nothing in this reel went to a hosted service. Make your own.",
+      "wav": "line-07.wav",
+      "start": 30.08,
+      "seconds": 3.76,
+      "transcript": "Nothing in this reel went to a hosted service. Make your own.",
+      "match": true
+    }
+  ]
+}

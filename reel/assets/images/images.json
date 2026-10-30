@@ -1,0 +1,49 @@
+{
+  "command": "mflux-generate-ernie-image-turbo --model ernie-image-turbo",
+  "width": 1664,
+  "height": 928,
+  "images": [
+    {
+      "n": 1,
+      "prompt": "A silver laptop on a dark wooden desk at night, its screen glowing with a strip of film frames, soft blue light, cinematic, shallow depth of field",
+      "seed": 1,
+      "png": "scene-01.png"
+    },
+    {
+      "n": 2,
+      "prompt": "A small film studio built inside a laptop keyboard, tiny cameras and lights on the keys, warm studio light, miniature photography",
+      "seed": 2,
+      "png": "scene-02.png"
+    },
+    {
+      "n": 3,
+      "prompt": "A glowing microchip on a circuit board, with sound waves and painted landscapes rising out of it like smoke, dark background, detailed",
+      "seed": 3,
+      "png": "scene-03.png"
+    },
+    {
+      "n": 4,
+      "prompt": "Exactly four glass jars on a shelf, small, medium, large and very large, each filled with glowing light, the largest the brightest, clean studio backdrop",
+      "seed": 4,
+      "png": "scene-04.png"
+    },
+    {
+      "n": 5,
+      "prompt": "A vintage studio microphone next to a pair of headphones, a red pen mark on a sheet of script paper, moody light",
+      "seed": 5,
+      "png": "scene-05.png"
+    },
+    {
+      "n": 6,
+      "prompt": "Storyboard cards pinned to a cork wall, turning into a strip of film that flows toward a projector, warm light, cinematic",
+      "seed": 6,
+      "png": "scene-06.png"
+    },
+    {
+      "n": 7,
+      "prompt": "A laptop alone on a desk by a window at dawn, an unplugged network cable coiled beside it, calm and quiet, soft golden light",
+      "seed": 7,
+      "png": "scene-07.png"
+    }
+  ]
+}
