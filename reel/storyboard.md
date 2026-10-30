@@ -1,6 +1,6 @@
 # mlx-video-kit reel storyboard
 
-A reel of about 36 s about mlx-video-kit, made with the plugin itself. The `make-video` skill reads this table. `script.txt` holds the narration lines in the same order.
+A reel of about 34 s about mlx-video-kit, made with the plugin itself. The `make-video` skill reads this table. `script.txt` holds the narration lines in the same order.
 
 | Scene | Narration | On-screen text | Image prompt |
 | --- | --- | --- | --- |
