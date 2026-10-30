@@ -13,7 +13,7 @@
 // Exit codes: 0 when every line matches, 2 when a line does not, 1 on an error.
 
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
 
@@ -48,6 +48,27 @@ function wavSeconds(file) {
     offset += 8 + size + (size % 2);
   }
   throw new Error(`${file}: no data chunk`);
+}
+
+// Makes a line's WAV in a new folder and moves it into place. mlx-audio can
+// exit 0 without writing audio when generation raises, so a missing or empty
+// WAV is an error here, and the old WAV is never kept as the new one.
+function makeAudio(text, name) {
+  const folder = mkdtempSync(join(out, ".tts-"));
+  try {
+    const voice = values.voice ? ["--voice", values.voice] : [];
+    run("mlx_audio.tts.generate", [
+      "--model", values.model, "--text", text, ...voice,
+      "--output_path", folder, "--file_prefix", name, "--join_audio",
+    ]);
+    const made = join(folder, `${name}.wav`);
+    if (!existsSync(made) || !(wavSeconds(made) > 0)) {
+      throw new Error(`mlx_audio.tts.generate made no audio for ${name}`);
+    }
+    renameSync(made, join(out, `${name}.wav`));
+  } finally {
+    rmSync(folder, { recursive: true, force: true });
+  }
 }
 
 // Lower case words, without punctuation, so "TACO!" and "taco" compare equal.
@@ -87,28 +108,34 @@ const narrationFile = join(out, "narration.json");
 const previous = existsSync(narrationFile) ? JSON.parse(readFileSync(narrationFile, "utf8")) : { lines: [] };
 const sameVoice = previous.model === values.model && previous.voice === (values.voice ?? null);
 
+const names = texts.map((_, i) => `line-${String(i + 1).padStart(2, "0")}`);
+const keep = texts.map(
+  (text, i) =>
+    sameVoice && !redo.has(i + 1) && previous.lines[i]?.text === text && existsSync(join(out, `${names[i]}.wav`)),
+);
+// narration.json is what tells a rerun which WAVs to keep. Remove it before
+// the first WAV changes, so a run that stops part way keeps no audio next time.
+if (keep.includes(false)) rmSync(narrationFile, { force: true });
+
 const lines = [];
 let start = 0;
 try {
   texts.forEach((text, i) => {
     const n = i + 1;
-    const name = `line-${String(n).padStart(2, "0")}`;
+    const name = names[i];
     const wav = `${name}.wav`;
-    const keep = sameVoice && !redo.has(n) && previous.lines[i]?.text === text && existsSync(join(out, wav));
-    if (!keep) {
+    if (!keep[i]) {
       console.error(`line ${n}: making audio`);
-      const voice = values.voice ? ["--voice", values.voice] : [];
-      run("mlx_audio.tts.generate", [
-        "--model", values.model, "--text", text, ...voice,
-        "--output_path", out, "--file_prefix", name, "--join_audio",
-      ]);
+      makeAudio(text, name);
     }
     console.error(`line ${n}: transcribing`);
+    const asrFile = join(asrDir, `${name}.json`);
+    rmSync(asrFile, { force: true });
     run("mlx_audio.stt.generate", [
       "--model", values["asr-model"], "--audio", join(out, wav),
       "--output-path", join(asrDir, name), "--format", "json",
     ]);
-    const transcript = JSON.parse(readFileSync(join(asrDir, `${name}.json`), "utf8")).text.trim();
+    const transcript = JSON.parse(readFileSync(asrFile, "utf8")).text.trim();
     const seconds = Math.round(wavSeconds(join(out, wav)) * 1000) / 1000;
     const match = words(transcript).join(" ") === words(text).join(" ");
     lines.push({ n, text, wav, start, seconds, transcript, match });
