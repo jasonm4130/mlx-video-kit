@@ -33,7 +33,7 @@ The plugin also needs the HyperFrames plugin. Install it yourself from https://g
 
 The `video-setup` skill reads the Mac's total memory with `sysctl -n hw.memsize` and picks one row of the tier table in `skills/video-setup/SKILL.md`. The tiers are 16 GB, 32-36 GB, 64 GB and 128 GB. The narration models are Qwen3-TTS CustomVoice, and the image models are Iris-3B Turbo, FLUX.2-klein-4B and Qwen-Image-2512.
 
-Every model is Apache-2.0. Nobody has run the 32-36 GB and 64 GB rows on a Mac of that size yet. The skill downloads the models from Hugging Face; this repository holds no weights.
+Every model is Apache-2.0. The 32-36 GB and 64 GB rows are unmeasured: nobody has recorded the peak memory of their image models yet. The skill downloads the models from Hugging Face; this repository holds no weights.
 
 ## Layout
 

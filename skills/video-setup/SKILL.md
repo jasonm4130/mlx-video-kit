@@ -56,7 +56,7 @@ Pick the one row of the table below whose "Total memory" holds that number. If t
 
 Every model in the table is Apache-2.0. The Iris image command also downloads its text encoder, `Qwen/Qwen3-VL-4B-Instruct`, which is Apache-2.0 too.
 
-"unmeasured" means that nobody has run that row on a Mac of that size yet. Tell the user this when you pick an unmeasured row.
+"measured" means that someone has recorded the peak memory of that row's image model. "unmeasured" means that nobody has, so the row can need more memory than the Mac has. When you pick an unmeasured row, tell the user this.
 
 Tell the user the tier you picked, the memory you read, and the two models.
 
