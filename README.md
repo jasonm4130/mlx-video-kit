@@ -4,7 +4,7 @@ mlx-video-kit is a plugin for Claude Code and Codex. It helps an agent make narr
 
 The plugin picks the models from the Mac's total memory, so a 16 GB Mac and a 128 GB Mac each get models that fit.
 
-This repository is in early work. The two skills are placeholders until later changes fill them in.
+This repository is in early work. The `make-video` skill is a placeholder until a later change fills it in.
 
 ## Skills
 
@@ -27,7 +27,13 @@ codex plugin marketplace add jasonm4130/mlx-video-kit
 codex plugin add mlx-video-kit@mlx-video-kit
 ```
 
-The plugin also needs the HyperFrames plugin. Install it from https://github.com/heygen-com/hyperframes.
+The plugin also needs the HyperFrames plugin. Install it yourself from https://github.com/heygen-com/hyperframes. The `video-setup` skill checks that `npx hyperframes` runs, but it does not install HyperFrames.
+
+## Models by memory
+
+The `video-setup` skill reads the Mac's total memory with `sysctl -n hw.memsize` and picks one row of the tier table in `skills/video-setup/SKILL.md`. The tiers are 16 GB, 32-36 GB, 64 GB and 128 GB. The narration models are Qwen3-TTS CustomVoice, and the image models are Iris-3B Turbo, FLUX.2-klein-4B and Qwen-Image-2512.
+
+Every model is Apache-2.0. Nobody has run the 32-36 GB and 64 GB rows on a Mac of that size yet. The skill downloads the models from Hugging Face; this repository holds no weights.
 
 ## Layout
 
