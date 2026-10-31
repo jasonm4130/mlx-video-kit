@@ -50,7 +50,7 @@ for (const [memsize, tier, narration, image] of [
   [16 * GIB, "16 GB", "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit", "mflux-generate-iris --model iris-3b -q 8"],
   [24 * GIB, "16 GB", "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit", "mflux-generate-iris --model iris-3b -q 8"],
   [36 * GIB, "32-36 GB", "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit", "mflux-generate-flux2 --model flux2-klein-4b"],
-  [64 * GIB, "64 GB", "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-bf16", "mflux-generate-qwen --model qwen-image-2512 -q 8"],
+  [64 * GIB, "64 GB", "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-bf16", "mflux-generate-ernie-image-turbo --model ernie-image-turbo"],
   [128 * GIB, "128 GB", "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-bf16", "mflux-generate-ernie-image-turbo --model ernie-image-turbo"],
 ]) {
   test(`a Mac with hw.memsize ${memsize} gets the ${tier} row`, () => {
@@ -62,17 +62,19 @@ for (const [memsize, tier, narration, image] of [
   });
 }
 
-test("the 128 GB row names ERNIE-Image-Turbo as its image model", () => {
-  assert.equal(pickRow(rows, 128 * GIB)["Image model"], "baidu/ERNIE-Image-Turbo");
-});
+for (const memsize of [64 * GIB, 128 * GIB]) {
+  test(`a Mac with hw.memsize ${memsize} gets ERNIE-Image-Turbo as its image model`, () => {
+    assert.equal(pickRow(rows, memsize)["Image model"], "baidu/ERNIE-Image-Turbo");
+  });
+}
 
 test("a Mac with less than 16 GiB gets no row", () => {
   assert.equal(pickRow(rows, 8 * GIB), undefined);
 });
 
-test("only the 32-36 GB and 64 GB rows are marked unmeasured", () => {
+test("only the 32-36 GB row is marked unmeasured", () => {
   assert.deepEqual(
     rows.filter((row) => row.Status === "unmeasured").map((row) => row.Tier),
-    ["32-36 GB", "64 GB"],
+    ["32-36 GB"],
   );
 });
